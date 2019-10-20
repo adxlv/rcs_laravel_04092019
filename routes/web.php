@@ -28,10 +28,12 @@ Route::get('/', function () {
 
 Route::get('/blog', function () {
     $posts = \App\Post::get();
+    $first_post = $posts->pull(0);
 
     $data = [
-        'myposts' => $posts,
-        'title'   => 'All Blogss',
+        'myposts'    => $posts,
+        'first_post' => $first_post,
+        'title'      => 'All Blogss',
     ];
 
     return view('pages.blog', $data);
@@ -45,13 +47,14 @@ Route::get('/aboutus', function () {
 Route::get('/blog/{id}', function ($id) {
 
     $one_post = \App\Post::find($id);
+
     if ($one_post == null) {
         abort(404);
     }
 
     $data = [
         'my_one_post' => $one_post,
-        'title'   => 'All Blogss',
+        'title'       => 'All Blogss',
     ];
 
     return view('pages.blog--single', $data);
